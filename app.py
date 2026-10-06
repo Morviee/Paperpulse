@@ -178,7 +178,7 @@ def main():
     else:
         # Initial Placeholder View
         st.write("👈 Start a research journey by entering a topic in the sidebar.")
-        st.image("https://undraw.co/api/illustrations/svg/undraw_researching_22gp")
+        st.image("https://images.unsplash.com/photo-1532012197267-da84d127e765?q=80&w=800&auto=format&fit=crop", use_column_width=True, caption="Empower your discovery with PaperPulse.")
 
 if __name__ == "__main__":
     main()
