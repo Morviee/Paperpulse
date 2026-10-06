@@ -1,4 +1,6 @@
-from langchain_ollama import ChatOllama
+import os
+import streamlit as st
+from langchain_groq import ChatGroq
 
 def research_gap_node(state: dict) -> dict:
     """
@@ -8,7 +10,11 @@ def research_gap_node(state: dict) -> dict:
     comparison = state.get("comparison", "")
     topic = state.get("topic", "AI")
     
-    llm = ChatOllama(model="qwen2.5:0.5b", temperature=0.7)
+    groq_api_key = os.environ.get("GROQ_API_KEY") or (st.secrets.get("GROQ_API_KEY") if hasattr(st, "secrets") else None)
+    if not groq_api_key:
+        raise ValueError("GROQ_API_KEY is missing. Please add it to Streamlit Secrets.")
+    
+    llm = ChatGroq(model_name="llama3-8b-8192", temperature=0.7, api_key=groq_api_key)
     
     prompt = f"""
     You are an AI research visionary focusing on '{topic}'.

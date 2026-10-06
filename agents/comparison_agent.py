@@ -1,4 +1,6 @@
-from langchain_ollama import ChatOllama
+import os
+import streamlit as st
+from langchain_groq import ChatGroq
 
 def comparison_node(state: dict) -> dict:
     """
@@ -9,7 +11,11 @@ def comparison_node(state: dict) -> dict:
     topic = state.get("topic", "AI")
     papers = state.get("papers", [])
     
-    llm = ChatOllama(model="qwen2.5:0.5b", temperature=0.5)
+    groq_api_key = os.environ.get("GROQ_API_KEY") or (st.secrets.get("GROQ_API_KEY") if hasattr(st, "secrets") else None)
+    if not groq_api_key:
+        raise ValueError("GROQ_API_KEY is missing. Please add it to Streamlit Secrets.")
+    
+    llm = ChatGroq(model_name="llama3-8b-8192", temperature=0.5, api_key=groq_api_key)
     
     paper_texts = "\\n".join([f"- {p['title']}: {p['content']}" for p in papers])
     
