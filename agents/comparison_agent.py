@@ -15,7 +15,7 @@ def comparison_node(state: dict) -> dict:
     if not groq_api_key:
         raise ValueError("GROQ_API_KEY is missing. Please add it to Streamlit Secrets.")
     
-    llm = ChatGroq(model_name="llama3-8b-8192", temperature=0.5, api_key=groq_api_key)
+    llm = ChatGroq(model_name="llama-3.1-8b-instant", temperature=0.5, api_key=groq_api_key)
     
     paper_texts = "\\n".join([f"- {p['title']}: {p['content']}" for p in papers])
     
